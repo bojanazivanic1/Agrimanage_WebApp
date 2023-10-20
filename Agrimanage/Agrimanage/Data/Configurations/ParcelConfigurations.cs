@@ -11,6 +11,7 @@ namespace Agrimanage.Infrastructure.Configurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
             builder.Property(x => x.ParcelNumber).IsRequired();
+            builder.HasIndex(x => x.ParcelNumber).IsUnique();
             builder.Property(x => x.Size).IsRequired();
             builder.HasOne(x => x.Owner).WithMany(x => x.Parcels).HasForeignKey(x => x.OwnerId).OnDelete(DeleteBehavior.Cascade);
         }

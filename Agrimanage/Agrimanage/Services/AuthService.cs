@@ -13,7 +13,7 @@ namespace Agrimanage.Services
 {
     public class AuthService : IAuthService
     {
-        private static IEmailService _emailService;
+        private static IEmailService? _emailService;
         private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
