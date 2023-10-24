@@ -29,6 +29,13 @@ const UpdateOperation = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    for (let field in Object.values(inputs)) {
+      if (field === "") {
+        toast.warning("All fields must be filled.");
+        return;
+      }
+    }
+
     updateOperation({ ...inputs, id: id }).then(() => {
       navigate("/dashboard");
     });

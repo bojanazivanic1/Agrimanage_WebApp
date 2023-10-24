@@ -1,6 +1,5 @@
 import { Button, Card, CardContent, TextField } from "@mui/material";
-import useForm from "../../hooks/use-form";
-import { confirmPassword, resetPassword } from "../../services/authService";
+import { resetPassword, confirmPassword } from "../../services/authService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -8,41 +7,52 @@ const ResetPassword = () => {
   const [isEmailSent, setIsEmailSent] = useState(false);
   const navigate = useNavigate();
 
-  const {
-    inputs: emailInputs,
-    handleChange: emailHandleChange,
-    handleSubmit: emailHandleSubmit,
-  } = useForm(
-    {
-      email: "",
-    },
-    async (formData) => {
-      await resetPassword(formData).then(() => {
-        setIsEmailSent(() => true);
-        sessionStorage.setItem("email", emailInputs.email);
-      });
-    }
-  );
+  const [emailInputs, setEmailInputs] = useState({
+    email: "",
+  });
 
-  const {
-    inputs: resetInputs,
-    handleChange: resetHandleChange,
-    handleSubmit: resetHandleSubmit,
-  } = useForm(
-    {
-      code: "",
-      password: "",
-      confirmPassword: "",
-    },
-    async (formData) => {
-      await confirmPassword({ ...formData, email: sessionStorage.email }).then(
-        () => {
-          sessionStorage.removeItem("email");
-          navigate("/login");
-        }
-      );
+  const [resetInputs, setResetInputs] = useState({
+    code: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const emailHandleChange = (e) => {
+    setEmailInputs({ email: e.target.value });
+  };
+
+  const emailHandleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (emailInputs.email === "") {
+      toast.warning("Email field must be filled.");
+      return;
     }
-  );
+
+    resetPassword(emailInputs).then((res) => {
+      setIsEmailSent(true);
+      sessionStorage.setItem("email", emailInputs.email);
+    });
+  };
+
+  const resetHandleChange = (e) => {
+    setResetInputs({ ...resetInputs, [e.target.name]: e.target.value });
+  };
+
+  const resetHandleSubmit = async (e) => {
+    e.preventDefault();
+
+    for (let field in Object.values(resetInputs)) {
+      if (field === "") {
+        toast.warning("All fields must be filled.");
+        return;
+      }
+    }
+
+    confirmPassword({ ...resetInputs, email: sessionStorage.email });
+    sessionStorage.removeItem("email");
+    navigate("/login");
+  };
 
   return (
     <>

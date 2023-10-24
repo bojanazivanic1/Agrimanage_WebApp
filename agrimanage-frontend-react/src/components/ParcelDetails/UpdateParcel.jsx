@@ -31,6 +31,13 @@ const UpdateParcel = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    for (let field in Object.values(inputs)) {
+      if (field === "") {
+        toast.warning("All fields must be filled.");
+        return;
+      }
+    }
+
     updateParcel({ ...inputs, id: id }).then(() => {
       navigate("/parcel/" + id);
     });

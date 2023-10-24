@@ -6,10 +6,10 @@ import Map from "./Map";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 
 const coordinates = [
-  [45.255, 19.8325],
-  [45.255, 19.8338],
-  [45.2544, 19.8338],
-  [45.2544, 19.8325],
+  [45.245413, 19.848590],
+  [45.245783, 19.849771],
+  [45.244986, 19.850136],
+  [45.244627, 19.849100],
 ];
 
 const ParcelDetails = () => {

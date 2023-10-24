@@ -1,22 +1,35 @@
 import { useNavigate, useParams } from "react-router-dom";
-import useForm from "../../hooks/use-form";
+import { useState } from "react";
 import { addOperation } from "../../services/userService";
 import { Button, Card, CardContent, TextField } from "@mui/material";
 
 const AddOperation = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { inputs, handleChange, handleSubmit } = useForm(
-    {
-      name: "",
-      description: "",
-    },
-    async (formData) => {
-      addOperation({ ...formData, parcelId: id }).then(() => {
-        navigate("/parcel/" + id);
-      });
+  const [inputs, setInputs] = useState({
+    name: "",
+    description: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    for (let field in Object.values(inputs)) {
+      if (field === "") {
+        toast.warning("All fields must be filled.");
+        return;
+      }
     }
-  );
+
+    addOperation({ ...inputs, parcelId: id }).then(() => {
+      navigate("/parcel/" + id);
+    });
+  };
 
   return (
     <>

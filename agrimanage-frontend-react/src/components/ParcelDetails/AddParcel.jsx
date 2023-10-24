@@ -1,25 +1,37 @@
 import { useNavigate } from "react-router-dom";
-import useForm from "../../hooks/use-form";
+import { useState } from "react";
 import { addParcel } from "../../services/userService";
 import { Button, Card, CardContent, TextField } from "@mui/material";
 import { getUserId } from "../../util/auth";
 
 const AddParcel = () => {
   const navigate = useNavigate();
+  const [inputs, setInputs] = useState({
+    name: "",
+    parcelNumber: "",
+    size: "",
+    confirmPassword: "",
+  });
 
-  const { inputs, handleChange, handleSubmit } = useForm(
-    {
-      name: "",
-      parcelNumber: "",
-      size: "",
-      confirmPassword: "",
-    },
-    async (formData) => {
-      addParcel({ ...formData, id: getUserId() }).then(() => {
-        navigate("/dashboard");
-      });
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    for (let field in Object.values(inputs)) {
+      if (field === "") {
+        toast.warning("All fields must be filled.");
+        return;
+      }
     }
-  );
+
+    addParcel({ ...inputs, id: getUserId() }).then(() => {
+      navigate("/dashboard");
+    });
+  };
 
   return (
     <>

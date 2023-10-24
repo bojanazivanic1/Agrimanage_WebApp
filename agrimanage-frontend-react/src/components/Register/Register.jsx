@@ -1,49 +1,46 @@
 import { useNavigate } from "react-router-dom";
-import useForm from "../../hooks/use-form";
-import { confirmEmail, register } from "../../services/authService";
 import { useState } from "react";
 import ConfirmEmail from "./ConfirmEmail";
 import { Button, Card, CardContent, TextField } from "@mui/material";
-
-const PASSWORD_REGEX =
-  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+import { register } from "../../services/authService";
 
 const Register = () => {
-  const [isEamilSent, setIsEmailSent] = useState(false);
-  const navigate = useNavigate();
+  const [isEmailSent, setIsEmailSent] = useState(false);
+  const [inputs, setInputs] = useState({
+    name: "",
+    lastName: "",
+    password: "",
+    confirmPassword: "",
+    email: "",
+    address: "",
+    dateOfBirth: "",
+    farmName: "",
+  });
 
-  const { inputs, handleChange, handleSubmit } = useForm(
-    {
-      name: "",
-      lastName: "",
-      password: "",
-      confirmPassword: "",
-      email: "",
-      address: "",
-      dateOfBirth: "",
-      farmName: "",
-    },
-    async (formData) => {
-      await register(formData).then(() => {
-        setIsEmailSent(() => true);
-        sessionStorage.setItem("email", inputs.email);
-      });
-    }
-  );
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
 
-  const submitHandlerCode = async (formData) => {
-    await confirmEmail({ ...formData, email: sessionStorage.email }).then(
-      () => {
-        sessionStorage.removeItem("email");
-        navigate("/login");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    for (let field in Object.values(inputs)) {
+      if (field === "") {
+        toast.warning("All fields must be filled.");
+        return;
       }
-    );
+    }
+
+    register(inputs).then(() => {
+      setIsEmailSent(true);
+      sessionStorage.setItem("email", inputs.email);
+    });
   };
 
   return (
     <>
-      {!isEamilSent ? (
+      {!isEmailSent ? (
         <Card component="form">
           <CardContent>
             <TextField

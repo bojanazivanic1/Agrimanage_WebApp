@@ -1,21 +1,29 @@
 import { useNavigate } from "react-router-dom";
-import useForm from "../../hooks/use-form";
+import { useState } from "react";
 import { Button, Card, CardContent, TextField } from "@mui/material";
 import { confirmEmail } from "../../services/authService";
 
 const ConfirmEmail = ({ email }) => {
   const navigate = useNavigate();
-  const { inputs, handleChange, handleSubmit } = useForm(
-    {
-      code: "",
-    },
-    async (formData) => {
-      await confirmEmail({ ...formData, email: email }).then(() => {
-        sessionStorage.removeItem("email");
-        navigate("/login");
-      });
+  const [code, setCode] = useState("");
+
+  const handleChange = (e) => {
+    setCode(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (code === "") {
+      toast.warning("Code field must be filled.");
+      return;
     }
-  );
+
+    confirmEmail({ code: code, email: email }).then(() => {
+      sessionStorage.removeItem("email");
+      navigate("/login");
+    });
+  };
 
   return (
     <Card component="form">
@@ -27,7 +35,7 @@ const ConfirmEmail = ({ email }) => {
           id="code"
           name="code"
           label="Code"
-          value={inputs.code}
+          value={code}
           onChange={handleChange}
         />
       </CardContent>

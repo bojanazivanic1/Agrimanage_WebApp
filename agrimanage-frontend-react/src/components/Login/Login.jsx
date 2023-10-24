@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import useForm from "../../hooks/use-form";
+import { useState } from "react";
 import { login } from "../../services/authService";
 import {
   Button,
@@ -11,17 +11,30 @@ import {
 
 const Login = () => {
   const navigate = useNavigate();
-  const { inputs, handleChange, handleSubmit } = useForm(
-    {
-      email: "",
-      password: "",
-    },
-    async (formData) => {
-      await login(formData).then(() => {
-        navigate("/dashboard");
-      });
+  const [inputs, setInputs] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    for (let field in Object.values(inputs)) {
+      if (field === "") {
+        toast.warning("All fields must be filled.");
+        return;
+      }
     }
-  );
+
+    login(inputs).then((res) => {
+      navigate("/dashboard");
+    });
+  };
 
   return (
     <>
@@ -51,7 +64,7 @@ const Login = () => {
         <Button onClick={handleSubmit}>Login</Button>
       </Card>
       <Typography marginTop="20px">
-        You forgot password? <Link to="/reset-password">Reset here.</Link>
+        You forgot the password? <Link to="/reset-password">Reset here.</Link>
       </Typography>
     </>
   );
