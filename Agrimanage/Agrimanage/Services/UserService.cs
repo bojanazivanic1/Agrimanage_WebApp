@@ -99,6 +99,12 @@ namespace Agrimanage.Services
             if (operation.Parcel!.OwnerId != ownerId)
                 throw new UnauthorizedException("You do not have permission to change status for this operation.");
 
+            if (operation.Status == EStatus.COMPLETED && changeStatusDto.Status != EStatus.COMPLETED)
+                throw new BadRequestException("The operation is completed yet.");
+
+            if (operation.Status == EStatus.IN_PROGRESS && changeStatusDto.Status == EStatus.PLANNED)
+                throw new BadRequestException("The operation is in progress yet.");
+
             operation.Status = changeStatusDto.Status;
 
             _unitOfWork.Operations.Update(operation);
@@ -173,6 +179,16 @@ namespace Agrimanage.Services
                 throw new UnauthorizedException("You do not have permission to access this parcel.");
 
             return _mapper.Map<GetParcelDto>(parcel);
+        }
+
+        public async Task<List<GetParcelDto>> GetParcelsAsync(int ownerId)
+        {
+            User user = await GetUser(ownerId);
+
+            IList<Parcel> parcels = await _unitOfWork.Parcels.GetAll(x => x.OwnerId == ownerId);
+
+            return _mapper.Map<List<GetParcelDto>>(parcels);
+
         }
 
         public async Task<GetParcelDto> GetParcelWithOperationsAsync(int parcelId, int ownerId)

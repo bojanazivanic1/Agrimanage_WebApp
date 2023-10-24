@@ -119,6 +119,17 @@ namespace Agrimanage.Controllers
         }
 
         [Authorize]
+        [HttpGet("get-parcels")]
+        public async Task<ActionResult> GetParcelsAsync()
+        {
+            if (!int.TryParse(User.Claims.First(c => c.Type == "Id").Value, out int ownerId))
+                throw new Exception("Bad ID. Logout and login.");
+
+            List<GetParcelDto> parcels = await userService.GetParcelsAsync(ownerId);
+            return Ok(parcels);
+        }
+
+        [Authorize]
         [HttpGet("get-parcel-operations/{parcelId}")]
         public async Task<ActionResult> GetParcelWithOperationsAsync(int parcelId)
         {

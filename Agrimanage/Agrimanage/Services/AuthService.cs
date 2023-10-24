@@ -41,6 +41,9 @@ namespace Agrimanage.Services
             user.Address = Sanitizer.GetSafeHtmlFragment(user.Address);
             user.FarmName = Sanitizer.GetSafeHtmlFragment(user.FarmName);
 
+            if (registerUserDto.DateOfBirth > DateTime.Now.AddYears(-15))
+                throw new BadRequestException("You must be at least 15 years old to register.");
+
             user.Salt = BCrypt.Net.BCrypt.GenerateSalt();
             user.Password = BCrypt.Net.BCrypt.HashPassword(user.Password, user.Salt);
             user.VerificatonCode = Math.Abs(Guid.NewGuid().GetHashCode()).ToString().Substring(0, 6);
@@ -136,6 +139,7 @@ namespace Agrimanage.Services
             {
                 new Claim("Id", user.Id.ToString()),
                 new Claim("Email", user.Email!),
+                new Claim("FarmName", user.FarmName!),
             };
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
                 _configuration.GetSection("JwtSettings:Token").Value!));

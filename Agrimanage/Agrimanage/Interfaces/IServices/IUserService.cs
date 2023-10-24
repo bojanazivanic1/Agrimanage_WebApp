@@ -17,5 +17,6 @@ namespace Agrimanage.Interfaces.IServices
         Task UpdateOperationAsync(UpdateOperationDto updateOperationDto, int ownerId);
         Task<GetOperationDto> GetOperationAsync(int operationId, int ownerId);
         Task<GetParcelDto> GetParcelAsync(int parcelId, int ownerId);
+        Task<List<GetParcelDto>> GetParcelsAsync(int ownerId);
     }
 }
