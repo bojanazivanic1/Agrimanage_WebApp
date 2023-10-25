@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getParcel } from "../../services/userService";
+import { deleteParcel, getParcel } from "../../services/userService";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
@@ -12,17 +12,21 @@ const coordinates = [
   [45.244986, 19.850136],
   [45.244627, 19.849187],
 
-
-  [45.252708, 19.855348]
+  [45.252708, 19.855348],
 ];
 
 const ParcelDetails = () => {
   const [parcel, setParcel] = useState({});
   const { id } = useParams();
 
+  const handleDelete = () => {
+    deleteParcel(parcel.id).then(() => {
+      navigate("/dashboard");
+    });
+  };
+
   useEffect(() => {
     getParcel(id).then((res) => {
-      console.log(res)
       res.coordinates = [
         [res.coordinates[0].x, res.coordinates[0].y],
         [res.coordinates[1].x, res.coordinates[1].y],
@@ -59,6 +63,9 @@ const ParcelDetails = () => {
             to={`/add-operation/` + parcel.id}
           >
             Add Operation
+          </Button>
+          <Button variant="contained" onClick={handleDelete}>
+            Delete
           </Button>
         </CardContent>
       </Card>

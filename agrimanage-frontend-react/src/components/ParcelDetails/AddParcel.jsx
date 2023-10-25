@@ -22,7 +22,7 @@ const AddParcel = () => {
   const mapRef = useRef(null);
 
   const map = useMemo(() => {
-    return<Map coordinates={{}} polygon={false} />;
+    return <Map coordinates={{}} polygon={false} />;
   }, [inputs.coordinates]);
 
   const handleChange = (e) => {
@@ -46,7 +46,7 @@ const AddParcel = () => {
 
   const handleCoordinatesChange = (e, index, property) => {
     const newInputs = { ...inputs };
-    
+
     if (property === "x") {
       newInputs.coordinates[index].x = e.target.value;
     } else if (property === "y") {
@@ -60,30 +60,44 @@ const AddParcel = () => {
 
   const handleMapClick = (e) => {
     const { lat, lng } = e.latlng;
-    
+
     setInputs((prevInputs) => {
       const updatedCoordinates = [...prevInputs.coordinates];
-  
+
       if (temp < updatedCoordinates.length) {
         updatedCoordinates[temp] = { x: lat, y: lng };
       }
-  
-      
+
       let nextIndex = temp;
-      while (nextIndex < updatedCoordinates.length && updatedCoordinates[nextIndex].x !== "") {
+      while (
+        nextIndex < updatedCoordinates.length &&
+        updatedCoordinates[nextIndex].x !== ""
+      ) {
         nextIndex++;
       }
-  
+
       temp = nextIndex;
-  
+
       return {
         ...prevInputs,
         coordinates: updatedCoordinates,
       };
     });
   };
-  
-  
+
+  const resetCoordinates = () => {
+    setInputs((prevInputs) => ({
+      ...prevInputs,
+      coordinates: [
+        { x: "", y: "" },
+        { x: "", y: "" },
+        { x: "", y: "" },
+        { x: "", y: "" },
+      ],
+    }));
+
+    temp = 0;
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -156,6 +170,7 @@ const AddParcel = () => {
               />
             </div>
           ))}
+          <Button onClick={resetCoordinates}>Reset Coordinates</Button>
           <Card sx={{ width: "1200px" }}>
             <Map map={map} ref={mapRef} onClick={handleMapClick} />
           </Card>

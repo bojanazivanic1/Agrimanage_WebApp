@@ -81,16 +81,16 @@ const Navbar = () => {
                   to="/dashboard"
                 >
                   Home
-                </Button>   
+                </Button>
                 <Button
                   variant="contained"
                   component={RouterLink}
                   to="/add-parcel"
                 >
                   Add Parcel
-                </Button>                
+                </Button>
               </>
-            ) : (  
+            ) : (
               <>
                 <Button
                   variant="contained"

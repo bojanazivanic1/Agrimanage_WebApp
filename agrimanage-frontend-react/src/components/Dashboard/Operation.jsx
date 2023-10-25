@@ -1,7 +1,14 @@
 import { Box, Button, Card, CardContent, Typography } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { deleteOperation } from "../../services/userService";
 
 const Operation = (props) => {
+  const handleDelete = () => {
+    deleteOperation(props.id).then(
+      window.location.reload()
+    );
+  };
+
   return (
     <Card
       sx={{
@@ -26,6 +33,9 @@ const Operation = (props) => {
         to={`/update-operation/` + props.id}
       >
         Update
+      </Button>
+      <Button variant="contained" onClick={handleDelete}>
+        Delete
       </Button>
     </Card>
   );
