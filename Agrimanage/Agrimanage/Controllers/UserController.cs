@@ -21,7 +21,7 @@ namespace Agrimanage.Controllers
 
         [Authorize]
         [HttpPost("add-parcel")]
-        public async Task<ActionResult> AddParcelsync(AddParcelDto addParcelDto)
+        public async Task<ActionResult> AddParcelsync([FromBody] AddParcelDto addParcelDto)
         {
             if (!int.TryParse(User.Claims.First(c => c.Type == "Id").Value, out int ownerId))
                 throw new Exception("Bad ID. Logout and login.");

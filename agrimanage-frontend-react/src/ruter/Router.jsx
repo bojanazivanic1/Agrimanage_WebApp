@@ -1,7 +1,6 @@
 import { Suspense, lazy } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { isAuthenticated } from "../util/auth";
-import { UpdateDisabled } from "@mui/icons-material";
 
 const Login = lazy(() => import("../components/Login/Login"));
 const Register = lazy(() => import("../components/Register/Register"));
@@ -39,7 +38,6 @@ const Router = () => {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/parcel/:id" element={<ParcelDetails />} />
         <Route path="/add-parcel" element={<AddParcel />} />

@@ -11,6 +11,8 @@ namespace Agrimanage.Models
         public int ParcelNumber { get; set; }
         [Required(ErrorMessage = "Size is required!")]
         public int Size { get; set; }
+        [Required(ErrorMessage = "Coordinates are required!")]
+        public List<Point> Coordinates = new List<Point>();
 
         public int OwnerId { get; set; }
         public User? Owner { get; set; }

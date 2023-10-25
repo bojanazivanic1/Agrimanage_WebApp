@@ -5,6 +5,7 @@ using Agrimanage.Interfaces.IRepository;
 using Agrimanage.Interfaces.IServices;
 using Agrimanage.Models;
 using AutoMapper;
+using System;
 
 namespace Agrimanage.Services
 {
@@ -27,21 +28,10 @@ namespace Agrimanage.Services
 
             Parcel parcelWithSameNumber = await _unitOfWork.Parcels.Get(x => x.ParcelNumber == addParcelDto.ParcelNumber);
             if (parcelWithSameNumber != null)
-                throw new Exception("This parcel number already exists.");
+                throw new BadRequestException("This parcel number already exists.");
 
-            /*
-            if (addParcelDto?.Operations?.Count != 0)
-            {
-                List<Operation> operations = _mapper.Map<List<Operation>>(addParcelDto?.Operations);
-
-                foreach (var operation in operations)
-                {
-                    operation.Status = EStatus.PLANNED;
-                }
-
-                parcel.Operations = operations;
-            }
-            */
+            if (!IsPolygonConvex(parcel.Coordinates))
+                throw new BadRequestException("The parcel needs to be a convex polygon.");
 
             await _unitOfWork.Parcels.Add(parcel);
             await _unitOfWork.Save();
@@ -231,5 +221,40 @@ namespace Agrimanage.Services
             return user;
         }
 
+        private static bool IsPolygonConvex(List<Point> coordinates)
+        {
+            int n = coordinates.Count;
+
+            if (n < 3) return false;
+
+            bool isClockwise = false;
+            bool isCounterClockwise = false;
+
+            for (int i = 0; i < n; i++)
+            {
+                double dx1 = coordinates[(i + 1) % n].X - coordinates[i].X;
+                double dy1 = coordinates[(i + 1) % n].Y - coordinates[i].Y;
+                double dx2 = coordinates[(i + 2) % n].X - coordinates[i].X;
+                double dy2 = coordinates[(i + 2) % n].Y - coordinates[i].Y;
+
+                double crossProduct = dx1 * dy2 - dx2 * dy1;
+
+                if (crossProduct < 0)
+                {
+                    isClockwise = true;
+                }
+                else if (crossProduct > 0)
+                {
+                    isCounterClockwise = true;
+                }
+
+                if (isClockwise && isCounterClockwise)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 }

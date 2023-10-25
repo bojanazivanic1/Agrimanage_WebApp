@@ -13,5 +13,7 @@ namespace Agrimanage.DTO.RequestDto
         public int ParcelNumber { get; set; }
         [Required(ErrorMessage = "Size is required!")]
         public int Size { get; set; }
+        [Required(ErrorMessage = "Coordinates are required!")]
+        public List<Point>? Coordinates { get; set; }
     }
 }

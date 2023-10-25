@@ -1,6 +1,7 @@
 ﻿using Agrimanage.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Newtonsoft.Json;
 
 namespace Agrimanage.Infrastructure.Configurations
 {
@@ -14,6 +15,10 @@ namespace Agrimanage.Infrastructure.Configurations
             builder.HasIndex(x => x.ParcelNumber).IsUnique();
             builder.Property(x => x.Size).IsRequired();
             builder.HasOne(x => x.Owner).WithMany(x => x.Parcels).HasForeignKey(x => x.OwnerId).OnDelete(DeleteBehavior.Cascade);
+            builder.Property(x => x.Coordinates).HasColumnName("Coordinates").HasConversion(
+                v => JsonConvert.SerializeObject(v),
+                v => JsonConvert.DeserializeObject<List<Point>>(v)
+            );
         }
     }
 }
