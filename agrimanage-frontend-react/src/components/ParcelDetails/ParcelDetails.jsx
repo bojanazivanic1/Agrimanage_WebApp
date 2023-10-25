@@ -22,6 +22,7 @@ const ParcelDetails = () => {
 
   useEffect(() => {
     getParcel(id).then((res) => {
+      console.log(res)
       res.coordinates = [
         [res.coordinates[0].x, res.coordinates[0].y],
         [res.coordinates[1].x, res.coordinates[1].y],

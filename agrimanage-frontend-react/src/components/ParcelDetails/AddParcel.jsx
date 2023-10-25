@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { addParcel } from "../../services/userService";
 import { Button, Card, CardContent, TextField } from "@mui/material";
-import { getUserId } from "../../util/auth";
 import Map from "./Map";
+
+var temp = 0;
 
 const AddParcel = () => {
   const navigate = useNavigate();
@@ -18,10 +19,11 @@ const AddParcel = () => {
       { x: "", y: "" },
     ],
   });
+  const mapRef = useRef(null);
 
   const map = useMemo(() => {
-    <Map coordinates={{}} polygon={false} />
-  }, []);
+    return<Map coordinates={{}} polygon={false} />;
+  }, [inputs.coordinates]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -44,7 +46,7 @@ const AddParcel = () => {
 
   const handleCoordinatesChange = (e, index, property) => {
     const newInputs = { ...inputs };
-
+    
     if (property === "x") {
       newInputs.coordinates[index].x = e.target.value;
     } else if (property === "y") {
@@ -55,6 +57,33 @@ const AddParcel = () => {
 
     setInputs(newInputs);
   };
+
+  const handleMapClick = (e) => {
+    const { lat, lng } = e.latlng;
+    
+    setInputs((prevInputs) => {
+      const updatedCoordinates = [...prevInputs.coordinates];
+  
+      if (temp < updatedCoordinates.length) {
+        updatedCoordinates[temp] = { x: lat, y: lng };
+      }
+  
+      
+      let nextIndex = temp;
+      while (nextIndex < updatedCoordinates.length && updatedCoordinates[nextIndex].x !== "") {
+        nextIndex++;
+      }
+  
+      temp = nextIndex;
+  
+      return {
+        ...prevInputs,
+        coordinates: updatedCoordinates,
+      };
+    });
+  };
+  
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -128,7 +157,7 @@ const AddParcel = () => {
             </div>
           ))}
           <Card sx={{ width: "1200px" }}>
-            <Map map={map} />
+            <Map map={map} ref={mapRef} onClick={handleMapClick} />
           </Card>
           <Button onClick={handleSubmit}>Add Parcel</Button>
         </CardContent>
