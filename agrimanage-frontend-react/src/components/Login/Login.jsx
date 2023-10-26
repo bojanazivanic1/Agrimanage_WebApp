@@ -38,11 +38,11 @@ const Login = () => {
 
   return (
     <>
-      <Card component="form">
+      <Card className="card" component="form">
         <CardContent>
           <TextField
             required
-            sx={{ marginBottom: "10px", width: "100%" }}
+            className="text-field"
             type="email"
             id="email"
             name="email"
@@ -52,7 +52,7 @@ const Login = () => {
           />
           <TextField
             required
-            sx={{ marginBottom: "10px", width: "100%" }}
+            className="text-field"
             type="password"
             id="password"
             name="password"
@@ -61,7 +61,7 @@ const Login = () => {
             onChange={handleChange}
           />
         </CardContent>
-        <Button onClick={handleSubmit}>Login</Button>
+        <Button className="button" onClick={handleSubmit}>Login</Button>
       </Card>
       <Typography marginTop="20px">
         You forgot the password? <Link to="/reset-password">Reset here.</Link>

@@ -106,20 +106,14 @@ const Dashboard = () => {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          <Card
-                            sx={{
-                              margin: "20px",
-                            }}
-                          >
                             <Operation
                               key={operation.id}
                               id={operation.id}
                               name={operation.name}
                               description={operation.description}
-                              parcelId={operation.parcelId}
+                              parcelName={operation.parcelName}
                               status={operation.status}
                             />
-                          </Card>
                         </div>
                       )}
                     </Draggable>
@@ -148,20 +142,14 @@ const Dashboard = () => {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          <Card
-                            sx={{
-                              margin: "20px",
-                            }}
-                          >
                             <Operation
                               key={operation.id}
                               id={operation.id}
                               name={operation.name}
                               description={operation.description}
-                              parcelId={operation.parcelId}
+                              parcelName={operation.parcelName}
                               status={operation.status}
                             />
-                          </Card>
                         </div>
                       )}
                     </Draggable>
@@ -190,20 +178,14 @@ const Dashboard = () => {
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
-                          <Card
-                            sx={{
-                              margin: "20px",
-                            }}
-                          >
                             <Operation
                               key={operation.id}
                               id={operation.id}
                               name={operation.name}
                               description={operation.description}
-                              parcelId={operation.parcelId}
+                              parcelName={operation.parcelName}
                               status={operation.status}
                             />
-                          </Card>
                         </div>
                       )}
                     </Draggable>

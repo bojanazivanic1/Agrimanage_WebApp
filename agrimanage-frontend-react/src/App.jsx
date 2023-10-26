@@ -1,15 +1,17 @@
 import { ToastContainer } from "react-toastify";
 import Navbar from "./components/Navbar/Navbar";
 import Router from "./ruter/Router";
-import 'react-toastify/dist/ReactToastify.css';
-import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.scss";
 
 const App = () => {
-  return <>
-    <ToastContainer position="bottom-left"/>
-    <Navbar />
-    <Router />
-  </>;
+  return (
+    <>
+      <ToastContainer position="bottom-left" />
+      <Navbar />
+      <Router />
+    </>
+  );
 };
 
 export default App;

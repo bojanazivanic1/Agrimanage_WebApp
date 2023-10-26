@@ -11,7 +11,6 @@ const AddParcel = () => {
   const [inputs, setInputs] = useState({
     name: "",
     parcelNumber: "",
-    size: "",
     coordinates: [
       { x: "", y: "" },
       { x: "", y: "" },
@@ -121,7 +120,7 @@ const AddParcel = () => {
 
   return (
     <>
-      <Card component="form">
+      <Card className="card" component="form">
         <CardContent>
           <TextField
             required
@@ -143,16 +142,6 @@ const AddParcel = () => {
             value={inputs.parcelNumber}
             onChange={handleChange}
           />
-          <TextField
-            required
-            sx={{ marginBottom: "10px", width: "100%" }}
-            type="text"
-            id="size"
-            name="size"
-            label="Size"
-            value={inputs.size}
-            onChange={handleChange}
-          />
           <br />
           {inputs.coordinates.map((coordinate, index) => (
             <div key={index}>
@@ -170,11 +159,11 @@ const AddParcel = () => {
               />
             </div>
           ))}
-          <Button onClick={resetCoordinates}>Reset Coordinates</Button>
+          <Button className="button" onClick={resetCoordinates}>Reset Coordinates</Button>
           <Card sx={{ width: "1200px" }}>
             <Map map={map} ref={mapRef} onClick={handleMapClick} />
           </Card>
-          <Button onClick={handleSubmit}>Add Parcel</Button>
+          <Button className="button" onClick={handleSubmit}>Add Parcel</Button>
         </CardContent>
       </Card>
     </>

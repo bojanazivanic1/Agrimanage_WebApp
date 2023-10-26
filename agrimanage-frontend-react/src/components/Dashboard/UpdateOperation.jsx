@@ -43,7 +43,7 @@ const UpdateOperation = () => {
 
   return (
     <>
-      <Card component="form">
+      <Card className="card" component="form">
         <CardContent>
           <TextField
             required
@@ -65,7 +65,7 @@ const UpdateOperation = () => {
             value={inputs.description}
             onChange={handleChange}
           />
-          <Button onClick={handleSubmit}>Update</Button>
+          <Button className="button" onClick={handleSubmit}>Update</Button>
         </CardContent>
       </Card>
     </>

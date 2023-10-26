@@ -39,19 +39,14 @@ const ParcelDetails = () => {
 
   return (
     <>
-      <Card
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <Card className="card">
         <CardContent>
-          <Typography>{parcel.name}</Typography>
-          <Typography>{parcel.parcelNumber}</Typography>
-          <Typography>{parcel.size}</Typography>
-          <Typography>{parcel.ownerId}</Typography>
+          <Typography>Name: {parcel.name}</Typography>
+          <Typography>Number: {parcel.parcelNumber}</Typography>
+          <Typography>Size: {parcel.size}</Typography>
           <Button
             variant="contained"
+            className="button"
             component={RouterLink}
             to={`/update-parcel/` + parcel.id}
           >
@@ -59,12 +54,13 @@ const ParcelDetails = () => {
           </Button>
           <Button
             variant="contained"
+            className="button"
             component={RouterLink}
             to={`/add-operation/` + parcel.id}
           >
             Add Operation
           </Button>
-          <Button variant="contained" onClick={handleDelete}>
+          <Button variant="contained" className="button" onClick={handleDelete}>
             Delete
           </Button>
         </CardContent>

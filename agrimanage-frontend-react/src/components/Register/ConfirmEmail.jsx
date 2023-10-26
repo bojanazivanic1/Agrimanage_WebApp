@@ -26,7 +26,7 @@ const ConfirmEmail = ({ email }) => {
   };
 
   return (
-    <Card component="form">
+    <Card className="card" component="form">
       <CardContent>
         <TextField
           required
@@ -39,7 +39,7 @@ const ConfirmEmail = ({ email }) => {
           onChange={handleChange}
         />
       </CardContent>
-      <Button onClick={handleSubmit}>Verify</Button>
+      <Button className="button" onClick={handleSubmit}>Verify</Button>
     </Card>
   );
 };

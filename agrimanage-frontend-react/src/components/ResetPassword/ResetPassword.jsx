@@ -57,7 +57,7 @@ const ResetPassword = () => {
   return (
     <>
       {!isEmailSent ? (
-        <Card component="form">
+        <Card className="card" component="form">
           <CardContent>
             <TextField
               required
@@ -70,10 +70,10 @@ const ResetPassword = () => {
               onChange={emailHandleChange}
             />
           </CardContent>
-          <Button onClick={emailHandleSubmit}>Send Email</Button>
+          <Button className="button" onClick={emailHandleSubmit}>Send Email</Button>
         </Card>
       ) : (
-        <Card component="form">
+        <Card className="card" component="form">
           <CardContent>
             <TextField
               required
@@ -107,7 +107,7 @@ const ResetPassword = () => {
               onChange={resetHandleChange}
             />
           </CardContent>
-          <Button onClick={resetHandleSubmit}>Reset Password</Button>
+          <Button className="button" onClick={resetHandleSubmit}>Reset Password</Button>
         </Card>
       )}
     </>

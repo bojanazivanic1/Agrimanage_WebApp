@@ -41,7 +41,7 @@ const Register = () => {
   return (
     <>
       {!isEmailSent ? (
-        <Card component="form">
+        <Card className="card" component="form">
           <CardContent>
             <TextField
               required
@@ -123,7 +123,7 @@ const Register = () => {
               onChange={handleChange}
             />
           </CardContent>
-          <Button onClick={handleSubmit}>Register</Button>
+          <Button className="button" onClick={handleSubmit}>Register</Button>
         </Card>
       ) : (
         <ConfirmEmail email={inputs.email} />

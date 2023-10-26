@@ -11,7 +11,7 @@ const Map = forwardRef(({ coordinates, polygon, onClick }, ref) => {
     const map = L.map(mapRef.current).setView(centerPosition, 15);
     L.tileLayer(import.meta.env.VITE_LINK_API).addTo(map);
     if (polygon) {
-      L.polygon(coordinates, { color: "blue" }).addTo(map);
+      L.polygon(coordinates, { color: "gray" }).addTo(map);
     }
 
     map.on("click", (e) => {

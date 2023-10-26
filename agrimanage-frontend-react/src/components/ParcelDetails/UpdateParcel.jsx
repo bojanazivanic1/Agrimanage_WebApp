@@ -8,8 +8,6 @@ const UpdateParcel = () => {
   const [inputs, setInputs] = useState({
     name: "",
     parcelNumber: "",
-    size: "",
-    confirmPassword: "",
   });
   const { id } = useParams();
 
@@ -45,7 +43,7 @@ const UpdateParcel = () => {
 
   return (
     <>
-      <Card component="form">
+      <Card className="card" component="form">
         <CardContent>
           <TextField
             required
@@ -67,17 +65,7 @@ const UpdateParcel = () => {
             value={inputs.parcelNumber}
             onChange={handleChange}
           />
-          <TextField
-            required
-            sx={{ marginBottom: "10px", width: "100%" }}
-            type="text"
-            id="size"
-            name="size"
-            label="Size"
-            value={inputs.size}
-            onChange={handleChange}
-          />
-          <Button onClick={handleSubmit}>Update</Button>
+          <Button className="button" onClick={handleSubmit}>Update</Button>
         </CardContent>
       </Card>
     </>

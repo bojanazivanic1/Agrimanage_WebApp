@@ -33,7 +33,7 @@ const AddOperation = () => {
 
   return (
     <>
-      <Card component="form">
+      <Card className="card" component="form">
         <CardContent>
           <TextField
             required
@@ -55,7 +55,7 @@ const AddOperation = () => {
             value={inputs.description}
             onChange={handleChange}
           />
-          <Button onClick={handleSubmit}>Add Operation</Button>
+          <Button className="button" onClick={handleSubmit}>Add Operation</Button>
         </CardContent>
       </Card>
     </>

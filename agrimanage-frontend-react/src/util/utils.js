@@ -16,7 +16,5 @@ export const handleError = (error) => {
         toast.warning(errorMessages);
     } else if (error.response && error.response.data && error.response.data.Exception) {
         toast.warning(error.response.data.Exception); //global error as a response
-    } else {
-        toast.error("An error occurred during registration.");
     }
 }

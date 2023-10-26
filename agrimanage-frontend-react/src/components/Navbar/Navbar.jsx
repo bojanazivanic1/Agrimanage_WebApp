@@ -40,16 +40,21 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar>
+    <AppBar className="navbar">
       <Container>
         <Toolbar>
           <Box>
             {isAuthenticated() ? (
               <>
-                <Button variant="contained" onClick={logoutHandler}>
+                <Button
+                  className="button"
+                  variant="contained"
+                  onClick={logoutHandler}
+                >
                   Logout
                 </Button>
                 <Button
+                 className="button"
                   variant="contained"
                   aria-controls="parcels-menu"
                   aria-haspopup="true"
@@ -67,6 +72,7 @@ const Navbar = () => {
                   {parcels &&
                     parcels.map((parcel) => (
                       <MenuItem
+                      className="menu-item"
                         key={parcel.id}
                         component={RouterLink}
                         to={`/parcel/${parcel.id}`}
@@ -76,6 +82,7 @@ const Navbar = () => {
                     ))}
                 </Menu>
                 <Button
+                 className="button"
                   variant="contained"
                   component={RouterLink}
                   to="/dashboard"
@@ -83,6 +90,7 @@ const Navbar = () => {
                   Home
                 </Button>
                 <Button
+                 className="button"
                   variant="contained"
                   component={RouterLink}
                   to="/add-parcel"
@@ -93,6 +101,7 @@ const Navbar = () => {
             ) : (
               <>
                 <Button
+                 className="button"
                   variant="contained"
                   component={RouterLink}
                   to="/register"
@@ -100,7 +109,7 @@ const Navbar = () => {
                   Register
                 </Button>
                 <Button
-                  sx={{ marginLeft: 2 }}
+                 className="button"
                   variant="contained"
                   component={RouterLink}
                   to="/login"
