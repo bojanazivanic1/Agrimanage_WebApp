@@ -8,6 +8,7 @@ const Map = forwardRef(({ coordinates, polygon, onClick }, ref) => {
   const mapRef = useRef(null);
 
   useEffect(() => {
+    
     const map = L.map(mapRef.current).setView(centerPosition, 15);
     L.tileLayer(import.meta.env.VITE_LINK_API).addTo(map);
     if (polygon) {

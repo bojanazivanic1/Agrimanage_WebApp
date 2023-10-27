@@ -38,11 +38,10 @@ const Login = () => {
 
   return (
     <>
-      <Card className="card" component="form">
+      <Card component="form">
         <CardContent>
           <TextField
             required
-            className="text-field"
             type="email"
             id="email"
             name="email"
@@ -52,7 +51,6 @@ const Login = () => {
           />
           <TextField
             required
-            className="text-field"
             type="password"
             id="password"
             name="password"
@@ -61,9 +59,9 @@ const Login = () => {
             onChange={handleChange}
           />
         </CardContent>
-        <Button className="button" onClick={handleSubmit}>Login</Button>
+        <Button onClick={handleSubmit}>Login</Button>
       </Card>
-      <Typography marginTop="20px">
+      <Typography marginTop="20px" color="gray">
         You forgot the password? <Link to="/reset-password">Reset here.</Link>
       </Typography>
     </>

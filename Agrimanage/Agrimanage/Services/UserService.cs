@@ -33,6 +33,8 @@ namespace Agrimanage.Services
             if (!IsPolygonConvex(parcel.Coordinates))
                 throw new BadRequestException("The parcel needs to be a convex polygon.");
 
+            parcel.Size = CalculateParcelSize(parcel.Coordinates);
+
             await _unitOfWork.Parcels.Add(parcel);
             await _unitOfWork.Save();
         }
@@ -65,9 +67,13 @@ namespace Agrimanage.Services
             if (parcelWithSameNumber != null)
                 throw new Exception("This parcel number already exists.");
 
+            if (!IsPolygonConvex(updateParcelDto.Coordinates!))
+                throw new BadRequestException("The parcel needs to be a convex polygon.");
+
             parcel.Name = updateParcelDto.Name;
             parcel.ParcelNumber = updateParcelDto.ParcelNumber;
-            parcel.Size = updateParcelDto.Size;
+            parcel.Size = CalculateParcelSize(updateParcelDto.Coordinates!);
+            parcel.Coordinates = updateParcelDto.Coordinates!;
             
             _unitOfWork.Parcels.Update(parcel);
             await _unitOfWork.Save();
@@ -154,8 +160,16 @@ namespace Agrimanage.Services
             User user = await GetUser(ownerId);
 
             IList<Operation> operations = await _unitOfWork.Operations.GetAll(x => x.Parcel!.OwnerId == ownerId);
+            List<GetOperationDto> operationDtos = _mapper.Map<List<GetOperationDto>>(operations);
 
-            return _mapper.Map<List<GetOperationDto>>(operations);
+            foreach (var operationDto in operationDtos)
+            {
+                Parcel parcel = await _unitOfWork.Parcels.Get(x => x.Id == operationDto.ParcelId);
+
+                operationDto.ParcelName = parcel.Name!;
+            }
+
+            return operationDtos;
         }
 
         public async Task<GetParcelDto> GetParcelAsync(int parcelId, int ownerId)
@@ -178,7 +192,6 @@ namespace Agrimanage.Services
             IList<Parcel> parcels = await _unitOfWork.Parcels.GetAll(x => x.OwnerId == ownerId);
 
             return _mapper.Map<List<GetParcelDto>>(parcels);
-
         }
 
         public async Task<GetParcelDto> GetParcelWithOperationsAsync(int parcelId, int ownerId)
@@ -210,7 +223,10 @@ namespace Agrimanage.Services
             if (parcel.OwnerId != ownerId)
                 throw new UnauthorizedException("You do not have permission to access this operation.");
 
-            return _mapper.Map<GetOperationDto>(operation);
+            GetOperationDto operationDto = _mapper.Map<GetOperationDto>(operation);
+            operationDto.ParcelName = parcel.Name!;
+
+            return operationDto;
         }
 
         private async Task<User> GetUser(int userId)
@@ -255,6 +271,27 @@ namespace Agrimanage.Services
             }
 
             return true;
+        }
+
+        public static double CalculateParcelSize(List<Point> coordinates)
+        {
+            int numPoints = coordinates.Count;
+            if (numPoints < 3)
+                throw new BadRequestException("There is no polygon.");
+
+            double area = 0.0;
+            for (int i = 0; i < numPoints; i++)
+            {
+                Point currentPoint = coordinates[i];
+                Point nextPoint = coordinates[(i + 1) % numPoints];
+                area += (currentPoint.X * nextPoint.Y) - (nextPoint.X * currentPoint.Y);
+            }
+
+            area = Math.Abs(area) / 2.0;
+
+            double areaInHectares = area * 1000000;
+
+            return Math.Round(areaInHectares, 3);
         }
     }
 }

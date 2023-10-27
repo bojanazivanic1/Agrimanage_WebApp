@@ -13,5 +13,6 @@ namespace Agrimanage.DTO.ResponseDto
         public string? Description { get; set; }
         public EStatus Status { get; set; }
         public int ParcelId { get; set; }
+        public string ParcelName { get; set; }
     }
 }

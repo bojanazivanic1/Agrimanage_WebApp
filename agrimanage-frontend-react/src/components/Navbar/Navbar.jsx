@@ -19,11 +19,12 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if(isAuthenticated()){
     getParcels().then((res) => {
       if (res != null) {
         setParcels(res);
       }
-    });
+    });}
   }, []);
 
   const logoutHandler = () => {
@@ -37,6 +38,12 @@ const Navbar = () => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleMenuItemClick = (parcelId) => {
+    setAnchorEl(null); 
+    navigate(`/parcel/${parcelId}`); 
+    window.location.reload();
   };
 
   return (
@@ -54,7 +61,7 @@ const Navbar = () => {
                   Logout
                 </Button>
                 <Button
-                 className="button"
+                  className="button"
                   variant="contained"
                   aria-controls="parcels-menu"
                   aria-haspopup="true"
@@ -72,17 +79,16 @@ const Navbar = () => {
                   {parcels &&
                     parcels.map((parcel) => (
                       <MenuItem
-                      className="menu-item"
+                        className="menu-item"
                         key={parcel.id}
-                        component={RouterLink}
-                        to={`/parcel/${parcel.id}`}
+                        onClick={() => handleMenuItemClick(parcel.id)} 
                       >
                         {parcel.name}
                       </MenuItem>
                     ))}
                 </Menu>
                 <Button
-                 className="button"
+                  className="button"
                   variant="contained"
                   component={RouterLink}
                   to="/dashboard"
@@ -90,7 +96,7 @@ const Navbar = () => {
                   Home
                 </Button>
                 <Button
-                 className="button"
+                  className="button"
                   variant="contained"
                   component={RouterLink}
                   to="/add-parcel"
@@ -101,7 +107,7 @@ const Navbar = () => {
             ) : (
               <>
                 <Button
-                 className="button"
+                  className="button"
                   variant="contained"
                   component={RouterLink}
                   to="/register"
@@ -109,7 +115,7 @@ const Navbar = () => {
                   Register
                 </Button>
                 <Button
-                 className="button"
+                  className="button"
                   variant="contained"
                   component={RouterLink}
                   to="/login"

@@ -5,68 +5,9 @@
   text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
 body {
-  background-color: #767371;
-}
-
-.button-group {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 5px;
-}
-
-.button {
-  background-color: #d84312;
-  text-transform: none;
-  font-size: 1rem;
-  border-radius: 8px;
-  max-width: 150px;
-  color: white;
-  margin: 10px;
-
-  &:hover {
-    background-color: #f4511e;
-    color: white;
-  }
-}
-
-.navbar {
-  position: fixed;
+  position: absolute;
   background-color: #3f3f3e;
-
-  &.button {
-    margin: 0 3px;
-  }
-}
-
-.menu-item:hover {
-  background-color: white;
-  color: #d84312;
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-  padding: 10px;
-  background-color: #c3c0bf;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-3px);
-  }
 }
 
 a {
@@ -77,21 +18,11 @@ a {
   }
 }
 
-.text-field {
-  margin-bottom: 10px;
-  width: 100%;
-
-  &:focus {
-    border: 2px solid #772a10;
-    border-radius: 8px;
-  }
-}
-
 h2 {
-  font-size: 1.5rem; 
-  color: #eee9e9; 
-  margin: 10px 0; 
-  text-align: center; 
-  border-bottom: 1px solid #ccc; 
-  padding-bottom: 5px; 
+  font-size: 1.5rem;
+  color: #eee9e9;
+  margin: 10px 0;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 5px;
 }

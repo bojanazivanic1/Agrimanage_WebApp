@@ -10,7 +10,7 @@ namespace Agrimanage.Models
         [Required(ErrorMessage = "Number of parcel is required!")]
         public int ParcelNumber { get; set; }
         [Required(ErrorMessage = "Size is required!")]
-        public int Size { get; set; }
+        public double Size { get; set; }
         [Required(ErrorMessage = "Coordinates are required!")]
         public List<Point> Coordinates = new List<Point>();
 

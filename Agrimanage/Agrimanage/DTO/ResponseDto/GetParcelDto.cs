@@ -11,7 +11,7 @@ namespace Agrimanage.DTO.ResponseDto
         [Required(ErrorMessage = "Number of parcel is required!")]
         public int ParcelNumber { get; set; }
         [Required(ErrorMessage = "Size is required!")]
-        public int Size { get; set; }
+        public double Size { get; set; }
         [Required(ErrorMessage = "Coordinates are required!")]
         public List<Point>? Coordinates { get; set; }
         public int OwnerId { get; set; }

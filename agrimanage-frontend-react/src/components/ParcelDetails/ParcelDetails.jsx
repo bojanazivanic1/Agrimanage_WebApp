@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { deleteParcel, getParcel } from "../../services/userService";
 import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import Map from "./Map";
-import { ContentPasteSearchOutlined } from "@mui/icons-material";
 
 const coordinates = [
   [45.245413, 19.848595],
@@ -43,7 +42,7 @@ const ParcelDetails = () => {
         <CardContent>
           <Typography>Name: {parcel.name}</Typography>
           <Typography>Number: {parcel.parcelNumber}</Typography>
-          <Typography>Size: {parcel.size}</Typography>
+          <Typography>Size: {parcel.size} ha</Typography>
           <Button
             variant="contained"
             className="button"
@@ -65,7 +64,7 @@ const ParcelDetails = () => {
           </Button>
         </CardContent>
       </Card>
-      <Card sx={{ width: "1200px" }}>
+      <Card sx={{ width: "700px" }}>
         {parcel.coordinates ? (
           <Map coordinates={parcel.coordinates} polygon={true} />
         ) : (

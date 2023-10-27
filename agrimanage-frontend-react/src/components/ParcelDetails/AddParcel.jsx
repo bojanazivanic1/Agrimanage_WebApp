@@ -3,6 +3,7 @@ import { useMemo, useRef, useState } from "react";
 import { addParcel } from "../../services/userService";
 import { Button, Card, CardContent, TextField } from "@mui/material";
 import Map from "./Map";
+import CoordinateInput from "./CoordinateInput";
 
 var temp = 0;
 
@@ -115,12 +116,13 @@ const AddParcel = () => {
 
     addParcel(parcelData).then(() => {
       navigate("/dashboard");
+      window.location.reload();
     });
   };
 
   return (
     <>
-      <Card className="card" component="form">
+      <Card className="card" component="form" sx={{ marginTop: "40px" }}>
         <CardContent>
           <TextField
             required
@@ -142,28 +144,22 @@ const AddParcel = () => {
             value={inputs.parcelNumber}
             onChange={handleChange}
           />
-          <br />
           {inputs.coordinates.map((coordinate, index) => (
-            <div key={index}>
-              <input
-                type="text"
-                placeholder={`X ${index + 1}`}
-                value={coordinate.x}
-                onChange={(e) => handleCoordinatesChange(e, index, "x")}
-              />
-              <input
-                type="text"
-                placeholder={`Y ${index + 1}`}
-                value={coordinate.y}
-                onChange={(e) => handleCoordinatesChange(e, index, "y")}
-              />
-            </div>
+            <CoordinateInput
+              key={index}
+              labelX={`X ${index + 1}`}
+              labelY={`Y ${index + 1}`}
+              valueX={coordinate.x}
+              valueY={coordinate.y}
+              onChangeX={(e) => handleCoordinatesChange(e, index, "x")}
+              onChangeY={(e) => handleCoordinatesChange(e, index, "y")}
+            />
           ))}
-          <Button className="button" onClick={resetCoordinates}>Reset Coordinates</Button>
-          <Card sx={{ width: "1200px" }}>
+          <Button onClick={resetCoordinates}>Reset Coordinates</Button>
+          <Card sx={{ width: "700px" }}>
             <Map map={map} ref={mapRef} onClick={handleMapClick} />
           </Card>
-          <Button className="button" onClick={handleSubmit}>Add Parcel</Button>
+          <Button onClick={handleSubmit}>Add Parcel</Button>
         </CardContent>
       </Card>
     </>

@@ -5,13 +5,8 @@
   text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-body {
-  background-color: #767371;
+html, body {
+  background-image: url("./assets/cultivated.jpeg");
 }
 
 .button-group {
@@ -30,7 +25,7 @@ body {
   color: white;
   margin: 10px;
 }
-.button .button:hover {
+.button:hover {
   background-color: #f4511e;
   color: white;
 }
@@ -61,9 +56,6 @@ body {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;
 }
-.card .card:hover {
-  transform: translateY(-3px);
-}
 
 a {
   color: #c0bab9;
@@ -76,7 +68,7 @@ a:hover {
   margin-bottom: 10px;
   width: 100%;
 }
-.text-field .text-field:focus {
+.text-field:focus {
   border: 2px solid #772a10;
   border-radius: 8px;
 }

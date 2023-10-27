@@ -1,4 +1,4 @@
-import jwtDecode from "jwt-decode"; 'jwt-decode';
+import jwtDecode from "jwt-decode";
 
 export const getUserId = () => {
     const token = localStorage.token;
