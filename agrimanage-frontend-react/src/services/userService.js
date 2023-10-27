@@ -1,5 +1,5 @@
 import api from "../api/api";
-import { handleError } from "../util/utils";
+import { handleError } from "../util/handle-errors";
 
 export const addParcel = async (data) => {
   try {

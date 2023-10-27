@@ -1,13 +1,5 @@
 import { toast } from "react-toastify";
 
-export const dateToString = (date) => {
-  return new Date(date).toLocaleDateString("en-GB");
-};
-
-export const dateTimeToString = (date) => {
-  return new Date(date).toLocaleString("en-GB");
-};
-
 export const handleError = (error) => {
     if (error.response //error with http request
         && error.response.data //server didn't send data as a response
