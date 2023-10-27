@@ -1,35 +1,24 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useState } from "react";
-import { addOperation } from "../../services/userService";
 import { Button, Card, CardContent, TextField } from "@mui/material";
+import useForm from "../../hooks/use-form"; 
+import { addOperation } from "../../services/userService";
 
 const AddOperation = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const [inputs, setInputs] = useState({
+
+  const initialInputs = {
     name: "",
     description: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInputs({ ...inputs, [name]: value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    for (let field in Object.values(inputs)) {
-      if (field === "") {
-        toast.warning("All fields must be filled.");
-        return;
-      }
-    }
-
+  const submitHandler = async (inputs) => {
     addOperation({ ...inputs, parcelId: id }).then(() => {
       navigate("/parcel/" + id);
     });
   };
+
+  const { inputs, handleChange, handleSubmit } = useForm(initialInputs, submitHandler);
 
   return (
     <>
@@ -37,7 +26,6 @@ const AddOperation = () => {
         <CardContent>
           <TextField
             required
-            sx={{ marginBottom: "10px", width: "100%" }}
             type="text"
             id="name"
             name="name"
@@ -47,7 +35,6 @@ const AddOperation = () => {
           />
           <TextField
             required
-            sx={{ marginBottom: "10px", width: "100%" }}
             type="text"
             id="description"
             name="description"

@@ -1,8 +1,9 @@
 import { TextField } from "@mui/material";
 
 const CoordinateInput = ({ labelX, labelY, valueX, valueY, onChangeX, onChangeY }) => {
+
   return (
-    <div>
+    <div className="coordinate-input">
       <TextField
         variant="outlined"
         label={labelX}
@@ -10,7 +11,7 @@ const CoordinateInput = ({ labelX, labelY, valueX, valueY, onChangeX, onChangeY 
         value={valueX}
         onChange={onChangeX}
       />
-      <TextField
+      <TextField sx={{marginLeft: "10px"}}
         variant="outlined"
         label={labelY}
         size="small"

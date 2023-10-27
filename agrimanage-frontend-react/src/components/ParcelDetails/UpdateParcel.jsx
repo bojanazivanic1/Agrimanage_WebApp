@@ -139,7 +139,6 @@ const UpdateParcel = () => {
         <CardContent>
           <TextField
             required
-            sx={{ marginBottom: "10px", width: "100%" }}
             type="text"
             id="name"
             name="name"
@@ -149,7 +148,6 @@ const UpdateParcel = () => {
           />
           <TextField
             required
-            sx={{ marginBottom: "10px", width: "100%" }}
             type="text"
             id="parcelNumber"
             name="parcelNumber"

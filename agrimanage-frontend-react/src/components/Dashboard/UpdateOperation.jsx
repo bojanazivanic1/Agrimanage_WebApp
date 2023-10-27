@@ -1,45 +1,28 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { getOperation, updateOperation } from "../../services/userService";
 import { Button, Card, CardContent, TextField } from "@mui/material";
+import useForm from "../../hooks/use-form";
+import { getOperation, updateOperation } from "../../services/userService";
 import { useEffect, useState } from "react";
 
 const UpdateOperation = () => {
   const navigate = useNavigate();
-  const [inputs, setInputs] = useState({
-    name: "",
-    description: "",
-  });
   const { id } = useParams();
+
+  const [inputs, setInputs] = useState({ name: "", description: "" });
 
   useEffect(() => {
     getOperation(id).then((res) => {
       setInputs(res);
     });
-  }, []);
+  }, [id]);
 
-  const handleChange = (e) => {
-    let { value, name } = e.target;
-
-    setInputs({
-      ...inputs,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    for (let field in Object.values(inputs)) {
-      if (field === "") {
-        toast.warning("All fields must be filled.");
-        return;
-      }
-    }
-
+  const submitHandler = async (inputs) => {
     updateOperation({ ...inputs, id: id }).then(() => {
       navigate("/dashboard");
     });
   };
+
+  const { handleChange, handleSubmit } = useForm(inputs, submitHandler);
 
   return (
     <>
@@ -47,7 +30,6 @@ const UpdateOperation = () => {
         <CardContent>
           <TextField
             required
-            sx={{ marginBottom: "10px", width: "100%" }}
             type="text"
             id="name"
             name="name"
@@ -57,7 +39,6 @@ const UpdateOperation = () => {
           />
           <TextField
             required
-            sx={{ marginBottom: "10px", width: "100%" }}
             type="text"
             id="description"
             name="description"
@@ -65,7 +46,9 @@ const UpdateOperation = () => {
             value={inputs.description}
             onChange={handleChange}
           />
-          <Button className="button" onClick={handleSubmit}>Update</Button>
+          <Button className="button" onClick={handleSubmit}>
+            Update
+          </Button>
         </CardContent>
       </Card>
     </>

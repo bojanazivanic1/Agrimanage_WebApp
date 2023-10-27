@@ -26,3 +26,16 @@ h2 {
   border-bottom: 1px solid #ccc;
   padding-bottom: 5px;
 }
+
+.coordinate-input {
+  display: flex;
+  flex-direction: row; 
+  justify-content: space-between; 
+  align-items: center; 
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.farm-name {
+  margin-left: auto;
+}

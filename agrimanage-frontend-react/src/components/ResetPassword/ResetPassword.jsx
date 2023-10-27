@@ -1,58 +1,65 @@
-import { Button, Card, CardContent, TextField } from "@mui/material";
-import { resetPassword, confirmPassword } from "../../services/authService";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import {
+  Button,
+  Card,
+  CardContent,
+  TextField,
+} from "@mui/material";
+import { resetPassword, confirmPassword } from "../../services/authService";
+import useForm from "../../hooks/use-form";
 
 const ResetPassword = () => {
   const [isEmailSent, setIsEmailSent] = useState(false);
   const navigate = useNavigate();
 
-  const [emailInputs, setEmailInputs] = useState({
+  const initialEmailInputs = {
     email: "",
-  });
+  };
 
-  const [resetInputs, setResetInputs] = useState({
+  const initialResetInputs = {
     code: "",
     password: "",
     confirmPassword: "",
-  });
-
-  const emailHandleChange = (e) => {
-    setEmailInputs({ email: e.target.value });
   };
 
-  const emailHandleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (emailInputs.email === "") {
+  const emailSubmitHandler = async (inputs) => {
+    if (inputs.email === "") {
       toast.warning("Email field must be filled.");
       return;
     }
-
-    resetPassword(emailInputs).then((res) => {
+    resetPassword(inputs).then((res) => {
       setIsEmailSent(true);
-      sessionStorage.setItem("email", emailInputs.email);
+      sessionStorage.setItem("email", inputs.email);
     });
   };
 
-  const resetHandleChange = (e) => {
-    setResetInputs({ ...resetInputs, [e.target.name]: e.target.value });
-  };
-
-  const resetHandleSubmit = async (e) => {
-    e.preventDefault();
-
-    for (let field in Object.values(resetInputs)) {
+  const resetSubmitHandler = async (inputs) => {
+    for (let field in Object.values(inputs)) {
       if (field === "") {
         toast.warning("All fields must be filled.");
         return;
       }
     }
-
-    confirmPassword({ ...resetInputs, email: sessionStorage.email });
+    confirmPassword({ ...inputs, email: sessionStorage.email });
     sessionStorage.removeItem("email");
     navigate("/login");
   };
+
+  const {
+    inputs: emailInputs,
+    handleChange: emailHandleChange,
+    handleSubmit: emailHandleSubmit,
+    resetForm: resetEmailForm,
+  } = useForm(initialEmailInputs, emailSubmitHandler);
+
+  const {
+    inputs: resetInputs,
+    handleChange: resetHandleChange,
+    handleSubmit: resetHandleSubmit,
+    resetForm: resetPasswordForm,
+  } = useForm(initialResetInputs, resetSubmitHandler);
 
   return (
     <>
@@ -61,7 +68,6 @@ const ResetPassword = () => {
           <CardContent>
             <TextField
               required
-              sx={{ marginBottom: "10px", width: "100%" }}
               type="email"
               id="email"
               name="email"
@@ -70,14 +76,15 @@ const ResetPassword = () => {
               onChange={emailHandleChange}
             />
           </CardContent>
-          <Button className="button" onClick={emailHandleSubmit}>Send Email</Button>
+          <Button className="button" onClick={emailHandleSubmit}>
+            Send Email
+          </Button>
         </Card>
       ) : (
         <Card className="card" component="form">
           <CardContent>
             <TextField
               required
-              sx={{ marginBottom: "10px", width: "100%" }}
               type="text"
               id="code"
               name="code"
@@ -88,7 +95,6 @@ const ResetPassword = () => {
             <br />
             <TextField
               required
-              sx={{ marginBottom: "10px", width: "100%" }}
               type="password"
               id="password"
               name="password"
@@ -98,7 +104,6 @@ const ResetPassword = () => {
             />
             <TextField
               required
-              sx={{ marginBottom: "10px", width: "100%" }}
               type="password"
               id="confirmPassword"
               name="confirmPassword"
@@ -107,7 +112,9 @@ const ResetPassword = () => {
               onChange={resetHandleChange}
             />
           </CardContent>
-          <Button className="button" onClick={resetHandleSubmit}>Reset Password</Button>
+          <Button className="button" onClick={resetHandleSubmit}>
+            Reset Password
+          </Button>
         </Card>
       )}
     </>

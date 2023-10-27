@@ -1,6 +1,4 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { login } from "../../services/authService";
 import {
   Button,
   Card,
@@ -8,33 +6,27 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import useForm from "../../hooks/use-form";
+import { login } from "../../services/authService";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [inputs, setInputs] = useState({
+
+  const initialInputs = {
     email: "",
     password: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInputs({ ...inputs, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    for (let field in Object.values(inputs)) {
-      if (field === "") {
-        toast.warning("All fields must be filled.");
-        return;
-      }
-    }
-
+  const submitHandler = async (inputs) => {
     login(inputs).then((res) => {
       navigate("/dashboard");
     });
   };
+
+  const { inputs, handleChange, handleSubmit } = useForm(
+    initialInputs,
+    submitHandler
+  );
 
   return (
     <>

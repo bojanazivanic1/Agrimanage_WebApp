@@ -1,4 +1,11 @@
-import { Box, Button, ButtonGroup, Card, CardContent, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Card,
+  CardContent,
+  Typography,
+} from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { deleteOperation } from "../../services/userService";
 
@@ -8,14 +15,14 @@ const Operation = (props) => {
   };
 
   return (
-    <Card
-      className="card"
-    >
+    <Card className="card">
       <CardContent>
+        <Typography sx={{ marginBottom: "10px", fontWeight: "bold" }}>
+          Parcel: {props.parcelName}
+        </Typography>
         <Typography>Operation: {props.name}</Typography>
-        <Typography>Parcel: {props.parcelName}</Typography>
       </CardContent>
-      <Box sx={{ flexGrow: 1, }}>
+      <Box>
         <Card className="card">
           <CardContent>
             <Typography>Description: {props.description}</Typography>
@@ -23,27 +30,27 @@ const Operation = (props) => {
         </Card>
       </Box>
       <ButtonGroup className="button-group">
-      <Button
-        className="button"
-        variant="contained"
-        size="small"
-        disableRipple
-        disableElevation
-        component={RouterLink}
-        to={`/update-operation/` + props.id}
-      >
-        Update
-      </Button>
-      <Button
-        className="button"
-        variant="contained"
-        size="small"
-        disableRipple
-        disableElevation
-        onClick={handleDelete}
-      >
-        Delete
-      </Button>
+        <Button
+          className="button"
+          variant="contained"
+          size="small"
+          disableRipple
+          disableElevation
+          component={RouterLink}
+          to={`/update-operation/` + props.id}
+        >
+          Update
+        </Button>
+        <Button
+          className="button"
+          variant="contained"
+          size="small"
+          disableRipple
+          disableElevation
+          onClick={handleDelete}
+        >
+          Delete
+        </Button>
       </ButtonGroup>
     </Card>
   );

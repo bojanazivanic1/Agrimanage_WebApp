@@ -1,41 +1,37 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
 import { Button, Card, CardContent, TextField } from "@mui/material";
 import { confirmEmail } from "../../services/authService";
+import useForm from "../../hooks/use-form";
 
 const ConfirmEmail = ({ email }) => {
   const navigate = useNavigate();
-  const [code, setCode] = useState("");
 
-  const handleChange = (e) => {
-    setCode(e.target.value);
+  const initialInputs = {
+    code: "",
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (code === "") {
-      toast.warning("Code field must be filled.");
-      return;
-    }
-
-    confirmEmail({ code: code, email: email }).then(() => {
+  const submitHandler = async (inputs) => {
+    confirmEmail({ code: inputs.code, email: email }).then(() => {
       sessionStorage.removeItem("email");
       navigate("/login");
     });
   };
+
+  const { inputs, handleChange, handleSubmit } = useForm(
+    initialInputs,
+    submitHandler
+  );
 
   return (
     <Card className="card" component="form">
       <CardContent>
         <TextField
           required
-          sx={{ marginBottom: "10px", width: "100%" }}
           type="text"
           id="code"
           name="code"
           label="Code"
-          value={code}
+          value={inputs.code}
           onChange={handleChange}
         />
       </CardContent>

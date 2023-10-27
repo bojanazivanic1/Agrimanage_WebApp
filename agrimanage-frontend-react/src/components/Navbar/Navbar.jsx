@@ -8,7 +8,7 @@ import {
   Toolbar,
 } from "@mui/material";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
-import { isAuthenticated } from "../../util/auth";
+import { getFarmName, isAuthenticated } from "../../util/auth";
 import { logout } from "../../services/authService";
 import { useEffect, useState } from "react";
 import { getParcels } from "../../services/userService";

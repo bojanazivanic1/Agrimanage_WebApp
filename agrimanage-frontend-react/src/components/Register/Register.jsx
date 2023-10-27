@@ -1,12 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ConfirmEmail from "./ConfirmEmail";
 import { Button, Card, CardContent, TextField } from "@mui/material";
 import { register } from "../../services/authService";
+import useForm from "../../hooks/use-form";
 
 const Register = () => {
   const [isEmailSent, setIsEmailSent] = useState(false);
-  const [inputs, setInputs] = useState({
+  const initialInputs = {
     name: "",
     lastName: "",
     password: "",
@@ -15,28 +15,19 @@ const Register = () => {
     address: "",
     dateOfBirth: "",
     farmName: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInputs({ ...inputs, [name]: value });
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    for (let field in Object.values(inputs)) {
-      if (field === "") {
-        toast.warning("All fields must be filled.");
-        return;
-      }
-    }
-
+  const submitHandler = async (inputs) => {
     register(inputs).then(() => {
       setIsEmailSent(true);
       sessionStorage.setItem("email", inputs.email);
     });
   };
+
+  const { inputs, handleChange, handleSubmit } = useForm(
+    initialInputs,
+    submitHandler
+  );
 
   return (
     <>
@@ -45,7 +36,6 @@ const Register = () => {
           <CardContent>
             <TextField
               required
-              sx={{ marginBottom: "10px", width: "100%" }}
               type="text"
               id="name"
               name="name"
@@ -55,7 +45,6 @@ const Register = () => {
             />
             <TextField
               required
-              sx={{ marginBottom: "10px", width: "100%" }}
               type="text"
               id="lastName"
               name="lastName"
@@ -65,7 +54,6 @@ const Register = () => {
             />
             <TextField
               required
-              sx={{ marginBottom: "10px", width: "100%" }}
               type="email"
               id="email"
               name="email"
@@ -75,7 +63,6 @@ const Register = () => {
             />
             <TextField
               required
-              sx={{ marginBottom: "10px", width: "100%" }}
               type="text"
               id="address"
               name="address"
@@ -85,7 +72,6 @@ const Register = () => {
             />
             <TextField
               required
-              sx={{ marginBottom: "10px", width: "100%" }}
               type="date"
               id="dateOfBirth"
               name="dateOfBirth"
@@ -94,7 +80,6 @@ const Register = () => {
             />
             <TextField
               required
-              sx={{ marginBottom: "10px", width: "100%" }}
               type="text"
               id="farmName"
               name="farmName"
@@ -104,7 +89,6 @@ const Register = () => {
             />
             <TextField
               required
-              sx={{ marginBottom: "10px", width: "100%" }}
               type="password"
               id="password"
               name="password"
@@ -114,7 +98,6 @@ const Register = () => {
             />
             <TextField
               required
-              sx={{ marginBottom: "10px", width: "100%" }}
               type="password"
               id="confirmPassword"
               name="confirmPassword"
@@ -123,7 +106,9 @@ const Register = () => {
               onChange={handleChange}
             />
           </CardContent>
-          <Button className="button" onClick={handleSubmit}>Register</Button>
+          <Button className="button" onClick={handleSubmit}>
+            Register
+          </Button>
         </Card>
       ) : (
         <ConfirmEmail email={inputs.email} />

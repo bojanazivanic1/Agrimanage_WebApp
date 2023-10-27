@@ -22,8 +22,8 @@ const AddParcel = () => {
   const mapRef = useRef(null);
 
   const map = useMemo(() => {
-    return <Map coordinates={{}} polygon={false} />;
-  }, [inputs.coordinates]);
+    return <Map polygon={false} />;
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
