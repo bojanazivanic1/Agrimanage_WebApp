@@ -82,7 +82,6 @@ const Navbar = () => {
                   {parcels &&
                     parcels.map((parcel) => (
                       <MenuItem
-                        className="menu-item"
                         key={parcel.id}
                         onClick={() => handleMenuItemClick(parcel.id)} 
                       >

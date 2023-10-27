@@ -4,6 +4,8 @@ import { getParcel, updateParcel } from "../../services/userService";
 import { Button, Card, CardContent, TextField } from "@mui/material";
 import Map from "./Map";
 import CoordinateInput from "./CoordinateInput";
+import { useDispatch } from "react-redux";
+import parcelsSlice from "../../store/parcels";
 
 var temp = -1;
 
@@ -21,6 +23,7 @@ const UpdateParcel = () => {
     ],
   });
   const mapRef = useRef(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getParcel(id).then((parcel) => {
@@ -112,7 +115,7 @@ const UpdateParcel = () => {
     temp = 0;
   };
 
-  const handleEdit = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const coordinates = inputs.coordinates.map((coord) => ({
@@ -128,8 +131,8 @@ const UpdateParcel = () => {
     };
 
     updateParcel(parcelData).then(() => {
+      dispatch(parcelsSlice.actions.updateParcel(parcelData));
       navigate("/dashboard");
-      window.location.reload();
     });
   };
 
@@ -172,7 +175,7 @@ const UpdateParcel = () => {
           <Card sx={{ width: "700px" }}>
             <Map map={map} ref={mapRef} onClick={handleMapClick} />
           </Card>
-          <Button className="button" onClick={handleEdit}>
+          <Button className="button" onClick={handleSubmit}>
             Edit Parcel
           </Button>
         </CardContent>
