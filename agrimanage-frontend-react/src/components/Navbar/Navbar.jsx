@@ -12,20 +12,23 @@ import { getFarmName, isAuthenticated } from "../../util/auth";
 import { logout } from "../../services/authService";
 import { useEffect, useState } from "react";
 import { getParcels } from "../../services/userService";
+import { useSelector, useDispatch } from "react-redux";
+import parcelsSlice from "../../store/parcels";
 
 const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
-  const [parcels, setParcels] = useState([]);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const parcels = useSelector(state=>state.parcels.parcels);
 
   useEffect(() => {
     if(isAuthenticated()){
     getParcels().then((res) => {
       if (res != null) {
-        setParcels(res);
+        dispatch(parcelsSlice.actions.setParcels(res));
       }
     });}
-  }, []);
+  }, [dispatch]);
 
   const logoutHandler = () => {
     logout();

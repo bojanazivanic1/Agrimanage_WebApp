@@ -4,6 +4,8 @@ import { addParcel } from "../../services/userService";
 import { Button, Card, CardContent, TextField } from "@mui/material";
 import Map from "./Map";
 import CoordinateInput from "./CoordinateInput";
+import { useDispatch } from "react-redux";
+import parcelsSlice from "../../store/parcels";
 
 var temp = 0;
 
@@ -20,6 +22,7 @@ const AddParcel = () => {
     ],
   });
   const mapRef = useRef(null);
+  const dispatch = useDispatch();
 
   const map = useMemo(() => {
     return <Map polygon={false} />;
@@ -115,8 +118,8 @@ const AddParcel = () => {
     };
 
     addParcel(parcelData).then(() => {
+      dispatch(parcelsSlice.actions.addParcel(parcelData));
       navigate("/dashboard");
-      window.location.reload();
     });
   };
 

@@ -4,6 +4,8 @@ import { Button, Card, CardContent, Typography } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { Link as RouterLink } from "react-router-dom";
 import Map from "./Map";
+import parcelsSlice from "../../store/parcels";
+import { useDispatch } from "react-redux";
 
 const coordinates = [
   [45.245413, 19.848595],
@@ -17,9 +19,11 @@ const coordinates = [
 const ParcelDetails = () => {
   const [parcel, setParcel] = useState({});
   const { id } = useParams();
+  const dispatch = useDispatch();
 
   const handleDelete = () => {
     deleteParcel(parcel.id).then(() => {
+      dispatch(parcelsSlice.actions.removeParcel(parcel.id));
       navigate("/dashboard");
     });
   };
