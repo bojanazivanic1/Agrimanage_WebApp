@@ -1,23 +1,37 @@
 import jwtDecode from "jwt-decode";
 
 export const getUserId = () => {
-    const token = localStorage.token;
+  const token = localStorage.token;
 
-    if (token) {
-        try {
-            const decodedToken = jwtDecode(token);
-            if (decodedToken) {
-                return decodedToken.id;
-            }
-        } catch (error) {
-            console.error('Greška pri dekodiranju tokena', error);
-        }
+  if (token) {
+    try {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken) {
+        return decodedToken.id;
+      }
+    } catch (error) {
+      console.error("Greška pri dekodiranju tokena", error);
     }
-    return null;
-}
-
+  }
+  return null;
+};
 
 export const isAuthenticated = () => {
-    return !!localStorage.token;
-}
+  return !!localStorage.token;
+};
 
+export const getFarmName = () => {
+  const token = localStorage.token;
+
+  if (token) {
+    try {
+      const decodedToken = jwtDecode(token);
+      if (decodedToken) {
+        return decodedToken.FarmName;
+      }
+    } catch (error) {
+      console.error("Greška pri dekodiranju tokena", error);
+    }
+  }
+  return null;
+};

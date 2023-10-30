@@ -1,13 +1,17 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
+  width: 2000px;
   padding: 2rem;
   text-align: center;
+  display: grid;
+  place-items: center;
 }
 
 body {
-  position: absolute;
-  background-color: #3f3f3e;
+  background-image: url("./assets/cultivated.jpeg");
+  //background-color: #3f3f3e;
+  width: 100% !important;
+  margin: 0;
+  padding: 0;
 }
 
 a {

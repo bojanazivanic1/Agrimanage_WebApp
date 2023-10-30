@@ -18,14 +18,14 @@ const Operation = (props) => {
     <Card className="card">
       <CardContent>
         <Typography sx={{ marginBottom: "10px", fontWeight: "bold" }}>
-          Parcel: {props.parcelName}
+          {props.parcelName}
         </Typography>
-        <Typography>Operation: {props.name}</Typography>
+        <Typography>{props.name}</Typography>
       </CardContent>
       <Box>
         <Card className="card">
           <CardContent>
-            <Typography>Description: {props.description}</Typography>
+            <Typography>{props.description}</Typography>
           </CardContent>
         </Card>
       </Box>

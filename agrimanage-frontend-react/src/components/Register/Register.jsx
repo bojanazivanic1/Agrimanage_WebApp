@@ -32,7 +32,7 @@ const Register = () => {
   return (
     <>
       {!isEmailSent ? (
-        <Card className="card" component="form">
+        <Card style={{ maxWidth: "500px" }} component="form">
           <CardContent>
             <TextField
               required

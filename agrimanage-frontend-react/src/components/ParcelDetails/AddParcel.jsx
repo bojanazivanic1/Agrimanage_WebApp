@@ -31,20 +31,10 @@ const AddParcel = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
 
-    if (name.startsWith("coordinates")) {
-      const [index, coordinate] = name.match(/\d+/g);
-      const updatedCoordinates = [...inputs.coordinates];
-      updatedCoordinates[index][coordinate] = value;
-      setInputs((prevInputs) => ({
-        ...prevInputs,
-        coordinates: updatedCoordinates,
-      }));
-    } else {
       setInputs((prevInputs) => ({
         ...prevInputs,
         [name]: value,
       }));
-    }
   };
 
   const handleCoordinatesChange = (e, index, property) => {

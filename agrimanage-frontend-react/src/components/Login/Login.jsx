@@ -30,7 +30,7 @@ const Login = () => {
 
   return (
     <>
-      <Card component="form">
+      <Card style={{ maxWidth: "500px" }} component="form">
         <CardContent>
           <TextField
             required

@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { Button, Card, CardContent, TextField } from "@mui/material";
-import useForm from "../../hooks/use-form";
 import { getOperation, updateOperation } from "../../services/userService";
 import { useEffect, useState } from "react";
 
@@ -16,13 +15,16 @@ const UpdateOperation = () => {
     });
   }, [id]);
 
-  const submitHandler = async (inputs) => {
+  const submitHandler = async () => {
     updateOperation({ ...inputs, id: id }).then(() => {
       navigate("/dashboard");
     });
   };
 
-  const { handleChange, handleSubmit } = useForm(inputs, submitHandler);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInputs({ ...inputs, [name]: value });
+  };
 
   return (
     <>
@@ -46,7 +48,7 @@ const UpdateOperation = () => {
             value={inputs.description}
             onChange={handleChange}
           />
-          <Button className="button" onClick={handleSubmit}>
+          <Button className="button" onClick={submitHandler}>
             Update
           </Button>
         </CardContent>

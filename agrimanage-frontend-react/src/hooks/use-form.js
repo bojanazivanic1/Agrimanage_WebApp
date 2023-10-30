@@ -17,6 +17,7 @@ const useForm = (initial, submitHandler) => {
         toast.warning("All fields must be filled.");
         return;
       }
+      inputs[field] = inputs[field].trim();
     }
 
     submitHandler(inputs);

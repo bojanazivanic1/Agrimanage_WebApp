@@ -1,12 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import {
-  Button,
-  Card,
-  CardContent,
-  TextField,
-} from "@mui/material";
+import { Button, Card, CardContent, TextField } from "@mui/material";
 import { resetPassword, confirmPassword } from "../../services/authService";
 import useForm from "../../hooks/use-form";
 
@@ -42,9 +37,10 @@ const ResetPassword = () => {
         return;
       }
     }
-    confirmPassword({ ...inputs, email: sessionStorage.email });
-    sessionStorage.removeItem("email");
-    navigate("/login");
+    confirmPassword({ ...inputs, email: sessionStorage.email }).then((res) => {
+      sessionStorage.removeItem("email");
+      navigate("/login");
+    });
   };
 
   const {

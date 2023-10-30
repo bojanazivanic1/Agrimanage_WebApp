@@ -6,6 +6,7 @@ import Map from "./Map";
 import CoordinateInput from "./CoordinateInput";
 import { useDispatch } from "react-redux";
 import parcelsSlice from "../../store/parcels";
+import { useSelector } from "react-redux";
 
 var temp = -1;
 
@@ -24,6 +25,9 @@ const UpdateParcel = () => {
   });
   const mapRef = useRef(null);
   const dispatch = useDispatch();
+  const parcel = useSelector((state) => {
+    return state.parcels.parcels.find((p) => p.id == id);
+  });
 
   useEffect(() => {
     getParcel(id).then((parcel) => {
@@ -132,7 +136,8 @@ const UpdateParcel = () => {
 
     updateParcel(parcelData).then(() => {
       dispatch(parcelsSlice.actions.updateParcel(parcelData));
-      navigate("/dashboard");
+      navigate(`/parcel/${id}`);
+      window.location.reload();
     });
   };
 

@@ -19,16 +19,15 @@ const Navbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const parcels = useSelector(state=>state.parcels.parcels);
+  const parcels = useSelector((state) => state.parcels.parcels);
 
   useEffect(() => {
-    if(isAuthenticated()){
-    getParcels().then((res) => {
-      if (res != null) {
+    if (isAuthenticated()) {
+      getParcels().then((res) => {
         dispatch(parcelsSlice.actions.setParcels(res));
-      }
-    });}
-  }, [dispatch]);
+      });
+    }
+  }, [isAuthenticated()]);
 
   const logoutHandler = () => {
     logout();
@@ -44,84 +43,79 @@ const Navbar = () => {
   };
 
   const handleMenuItemClick = (parcelId) => {
-    setAnchorEl(null); 
-    navigate(`/parcel/${parcelId}`); 
+    setAnchorEl(null);
+    navigate(`/parcel/${parcelId}`);
     window.location.reload();
   };
 
   return (
-    <AppBar className="navbar">
+    <AppBar>
       <Container>
         <Toolbar>
-          <Box>
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+            width="100%"
+          >
             {isAuthenticated() ? (
               <>
-                <Button
-                  className="button"
-                  variant="contained"
-                  onClick={logoutHandler}
-                >
-                  Logout
-                </Button>
-                <Button
-                  className="button"
-                  variant="contained"
-                  aria-controls="parcels-menu"
-                  aria-haspopup="true"
-                  onClick={handleMenuClick}
-                >
-                  Parcels
-                </Button>
-                <Menu
-                  id="parcels-menu"
-                  anchorEl={anchorEl}
-                  keepMounted
-                  open={Boolean(anchorEl)}
-                  onClose={handleMenuClose}
-                >
-                  {parcels &&
-                    parcels.map((parcel) => (
-                      <MenuItem
-                        key={parcel.id}
-                        onClick={() => handleMenuItemClick(parcel.id)} 
-                      >
-                        {parcel.name}
-                      </MenuItem>
-                    ))}
-                </Menu>
-                <Button
-                  className="button"
-                  variant="contained"
-                  component={RouterLink}
-                  to="/dashboard"
-                >
-                  Home
-                </Button>
-                <Button
-                  className="button"
-                  variant="contained"
-                  component={RouterLink}
-                  to="/add-parcel"
-                >
-                  Add Parcel
-                </Button>
+                <div>
+                  <Button variant="contained" onClick={logoutHandler}>
+                    Logout
+                  </Button>
+                  <Button
+                    variant="contained"
+                    aria-controls="parcels-menu"
+                    aria-haspopup="true"
+                    onClick={handleMenuClick}
+                  >
+                    Parcels
+                  </Button>
+                  <Menu
+                    id="parcels-menu"
+                    anchorEl={anchorEl}
+                    keepMounted
+                    open={Boolean(anchorEl)}
+                    onClose={handleMenuClose}
+                  >
+                    {parcels &&
+                      parcels.map((parcel) => (
+                        <MenuItem
+                          key={parcel.id}
+                          onClick={() => handleMenuItemClick(parcel.id)}
+                        >
+                          {parcel.name}
+                        </MenuItem>
+                      ))}
+                  </Menu>
+                  <Button
+                    variant="contained"
+                    component={RouterLink}
+                    to="/dashboard"
+                  >
+                    Home
+                  </Button>
+                  <Button
+                    variant="contained"
+                    component={RouterLink}
+                    to="/add-parcel"
+                  >
+                    Add Parcel
+                  </Button>
+                </div>
+                <p style={{ marginLeft: "auto" }}>{getFarmName()}</p>
               </>
             ) : (
               <>
                 <Button
-                  className="button"
                   variant="contained"
                   component={RouterLink}
                   to="/register"
                 >
                   Register
                 </Button>
-                <Button
-                  className="button"
-                  variant="contained"
-                  component={RouterLink}
-                  to="/login"
-                >
+                <Button variant="contained" component={RouterLink} to="/login">
                   Login
                 </Button>
               </>

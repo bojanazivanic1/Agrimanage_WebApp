@@ -27,14 +27,13 @@ const ParcelDetails = () => {
     <>
       {parcel ? (
         <>
-          <Card className="card">
+          <Card style={{ maxWidth: "700px" }}>
             <CardContent>
               <Typography>Name: {parcel.name}</Typography>
               <Typography>Number: {parcel.parcelNumber}</Typography>
               <Typography>Size: {parcel.size} ha</Typography>
               <Button
                 variant="contained"
-                className="button"
                 component={RouterLink}
                 to={`/update-parcel/` + parcel.id}
               >
@@ -42,17 +41,12 @@ const ParcelDetails = () => {
               </Button>
               <Button
                 variant="contained"
-                className="button"
                 component={RouterLink}
                 to={`/add-operation/` + parcel.id}
               >
                 Add Operation
               </Button>
-              <Button
-                variant="contained"
-                className="button"
-                onClick={handleDelete}
-              >
+              <Button variant="contained" onClick={handleDelete}>
                 Delete
               </Button>
             </CardContent>
