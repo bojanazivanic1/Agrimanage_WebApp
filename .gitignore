@@ -271,6 +271,39 @@ __pycache__/
 # Cake - Uncomment if you are using it
 # tools/
 
+# React Native
+
+# Generated files
+*.log
+*.hprof
+*.pid
+*.seed
+*.stacktrace
+
+# Android/IntelliJ
+*.iml
+.gradle/
+local.properties
+**/build/
+**/captures/
+.gradle/
+.idea/
+.idea/caches
+.idea/libraries
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/jsLibraryMappings.xml
+.idea/.name
+.DS_Store
+*.sublime-workspace
+
+# Android
+android/.gradle/
+android/app/build/
+android/build/
+
 ### react ###
 .DS_*
 logs
