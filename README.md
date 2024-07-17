@@ -1,2 +1,2 @@
 # Agrimanage_WebApp
-Web app - .NET Core 6, Postgres, React 
+Web app - .NET 6, Postgres, React, React Native
